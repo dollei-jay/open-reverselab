@@ -12,5 +12,5 @@ python scripts/misc/lab_healthcheck.py
 python scripts/misc/ai_toolcheck.py
 
 # Web CTF 工具巡检
-python scripts/ctf-website/ctf_toolcheck.py
+.\scripts\ctf-website\ctf_toolcheck.ps1
 ```

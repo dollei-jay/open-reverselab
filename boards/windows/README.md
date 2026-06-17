@@ -4,7 +4,7 @@ Windows PE/二进制逆向分析板块。
 
 ## 工具链
 
-- `tools/common/ghidra_*/` — Ghidra 反编译器
+- `tools/common/` — Ghidra 反编译器（通过 install_tools.ps1 -Common 安装）
 - `tools/windows/Cutter/` — Rizin/Cutter 反汇编
 - `tools/windows/PE-bear/` — PE 结构分析
 - `tools/windows/die/` — Detect It Easy 文件类型识别

@@ -85,10 +85,10 @@ function New-ToolBat {
     $batDir = Join-Path $toolsDir "bin"
     New-Item -ItemType Directory -Force -Path $batDir | Out-Null
     $batPath = Join-Path $batDir "$Name.bat"
-    $relativeTarget = Resolve-Path -Path $Target -Relative
+    $absTarget = (Resolve-Path -Path $Target).Path
     @"
 @echo off
-"$relativeTarget" %*
+"$absTarget" %*
 "@ | Out-File -FilePath $batPath -Encoding ASCII
     Write-Host "    Wrapper: $batPath" -ForegroundColor Gray
 }
