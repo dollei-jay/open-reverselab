@@ -146,3 +146,14 @@ python scripts/misc/ai_toolcheck.py
 
 - [codex-session-patcher](https://github.com/LING71671/codex-session-patcher) — AI Agent 项目级配置
 - Git、Python 3、Java（部分工具需要）
+
+## 免责 & 贡献
+
+作者技术有限，知识库技术文档难免有疏漏或不够深入之处。欢迎各位大佬提 PR 补充、纠错、扩展：
+
+- `kb/ctf-website/techniques/` — 补充攻击技术文档（伪代码优先，能直接跑）
+- `scripts/` — 完善工具脚本
+- `templates/` — 优化分析模板
+- `tools/` — 补充工具安装说明
+
+本项目仅供合法授权的安全研究、CTF 竞赛、教育培训使用。
