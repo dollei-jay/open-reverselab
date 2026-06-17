@@ -25,13 +25,14 @@ python scripts/ctf-website/kb_router.py "sql injection"
 
 ## AI Entry
 
-搭配 [codex-session-patcher](https://github.com/LING71671/codex-session-patcher) 后，AI 会自动读取：
-
 | 文件 | 作用 |
 |---|---|
 | [AI-USAGE.md](AI-USAGE.md) | 全局任务路由表 + 跨板块联动规则 |
 | [AGENTS.md](AGENTS.md) | Agent 行为约定 + 默认分析流程 |
+| [SKILLS.md](SKILLS.md) | 推荐安装的 Claude Code skills |
 | [boards/README.md](boards/README.md) | Board 索引（Android / Windows / CTF / Misc） |
+
+搭配 [codex-session-patcher](https://github.com/LING71671/codex-session-patcher) 后，AI 会自动读取以上文件。
 
 ## Boards
 
