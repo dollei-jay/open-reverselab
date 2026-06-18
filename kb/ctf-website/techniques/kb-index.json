@@ -455,6 +455,12 @@
       "signals": ["webview", "addjavascriptinterface", "deeplink", "intent hijacking", "cordova", "react native", "electron", "nodeintegration", "contextisolation", "flutter", "platform channel", "capacitor", "wkwebview", "javascript bridge"],
       "files": ["21-mobile-bridge/01-webview-attacks.md", "21-mobile-bridge/02-cordova-reactnative.md"],
       "priority": 9
+    },
+    {
+      "id": "dos",
+      "signals": ["dos", "ddos", "denial of service", "拒绝服务", "slowloris", "slow http", "rapid reset", "h2 rapid reset", "CVE-2023-44487", "rudy", "websocket dos", "graphql amplification", "resource exhaustion", "hashdos", "billion laughs", "xml bomb", "zip bomb", "amplification", "drdos", "dns amplification", "ntp monlist", "memcached udp", "ip spoofing", "反射攻击", "放大攻击"],
+      "files": ["22-dos/01-application-layer-dos.md", "22-dos/02-resource-exhaustion.md", "22-dos/03-amplification-drdos.md"],
+      "priority": 8
     }
   ]
 }
