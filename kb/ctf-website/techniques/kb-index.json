@@ -254,7 +254,8 @@
         "12-payment/payment-callback-async.md",
         "12-payment/payment-php.md",
         "12-payment/payment-subscription.md",
-        "12-payment/payment-digital-goods.md"
+        "12-payment/payment-digital-goods.md",
+        "12-payment/payment-email-bounce-idor.md"
       ],
       "priority": 10
     },
@@ -287,6 +288,14 @@
       "signals": ["digital goods", "虚拟商品", "IAP", "in-app purchase", "内购", "receipt", "收据", "app store", "google play", "steam", "cdkey", "卡密", "license key", "激活码", "virtual currency", "虚拟货币", "token", "代币", "loyalty points", "积分", "gift card", "礼品卡"],
       "files": [
         "12-payment/payment-digital-goods.md"
+      ],
+      "priority": 9
+    },
+    {
+      "id": "payment-bounce-idor",
+      "signals": ["bounce", "退信", "NDR", "non-delivery receipt", "email bounce", "bounce callback", "order idor", "订单越权", "order enumeration", "guest order leak", "card key leak", "卡密泄露", "voucher leak", "IDOR", "insecure direct object reference", "CWE-639", "CWE-862", "CWE-200", "order detail leak"],
+      "files": [
+        "12-payment/payment-email-bounce-idor.md"
       ],
       "priority": 9
     },
