@@ -93,6 +93,21 @@ def main() -> int:
             if isinstance(arg, str) and arg.endswith((".py", ".js")) and not (ROOT / arg).is_file():
                 failures.append(f"MCP {name} missing local entry: {arg}")
 
+    # This public repository intentionally avoids publishing personal commit
+    # addresses. Contributors can override this locally only when they have
+    # explicitly chosen to publish their address.
+    author_email = subprocess.check_output(
+        ["git", "-C", str(ROOT), "log", "-1", "--format=%ae"],
+        text=True,
+        encoding="utf-8",
+    ).strip()
+    if (
+        author_email
+        and "noreply" not in author_email.lower()
+        and os.environ.get("ALLOW_PUBLIC_COMMIT_EMAIL") != "1"
+    ):
+        failures.append("latest commit author email is not a noreply address")
+
     print(json.dumps({"overall": "PASS" if not failures else "FAIL", "failures": failures}, ensure_ascii=False, indent=2))
     return 0 if not failures else 1
 
