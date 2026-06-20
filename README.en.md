@@ -12,7 +12,7 @@ Signal → kb_router(board=) → kb_read_file → Attack chain → MCP tool mapp
 
 | Signal Type | Board | KB Categories / Files | MCP Tool Family |
 |---|---|---|---|
-| HTTP/Web/API/CVE/CAPTCHA | `ctf-website` | 21/85 | `http_probe` `run_ctf_tool` `kb_router` |
+| HTTP/Web/API/CVE/CAPTCHA | `ctf-website` | 22/90 | `http_probe` `run_ctf_tool` `kb_router` |
 | APK/DEX/SO/Frida/Java | `apk-reverse` | 8/17 | `android_app_baseline` `android_crypto_unpack_recipe` `android_frida_*` |
 | PE/x64/x86/malware/driver | `pe-reverse` | 8/18 | `triage_pe` `ghidra_headless_analyze` `make_x64dbg_breakpoint_script` `sample_full_workup` |
 | Crypto/Protocol/Cheat/IoT/Radio | `general` | 4+4/12 | `die_scan` `ghidra_*` `rizin_*` `python_re_tool_*` |
@@ -21,7 +21,7 @@ Signal → kb_router(board=) → kb_read_file → Attack chain → MCP tool mapp
 
 ```
 kb/
-├── ctf-website/techniques/   21 categories, 85 articles — Full web attack surface
+├── ctf-website/techniques/   22 categories, 90 articles — Full web attack surface
 ├── apk-reverse/techniques/    8 categories, 17 articles — APK/DEX reverse engineering
 ├── pe-reverse/techniques/     8 categories, 18 articles — PE binary analysis
 └── general/techniques/        4+4 categories, 12 articles — Cryptography / Protocols / Cheating / Methodology
@@ -35,7 +35,7 @@ Agent workflow: detect signal → `kb_router` lookup → `kb_read_file` → exec
 
 | Board | Trigger Signals |
 |---|---|
-| `boards/ctf-website` | URL, HTTP, JWT, SQLi, SSRF, CVE, API, CSP, OAuth, CAPTCHA, Cloudflare, ReDoS, Slowloris, DoS |
+| `boards/ctf-website` | URL, HTTP, JWT, SQLi, SSRF, CVE, API, CSP, OAuth, CAPTCHA, Cloudflare, ReDoS, Slowloris, DoS, Paywall |
 | `boards/android` | APK, DEX, adb, Frida, jadx, smali, SO, native |
 | `boards/windows` | PE, EXE, DLL, x64dbg, Ghidra, Procmon, packer, malware |
 | `boards/general` | AES/DES/RSA, protobuf, game cheat, EAC/BE/Vanguard, firmware, JTAG, SDR |

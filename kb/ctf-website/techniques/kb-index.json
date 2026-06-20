@@ -459,8 +459,20 @@
     {
       "id": "dos",
       "signals": ["dos", "ddos", "denial of service", "拒绝服务", "slowloris", "slow http", "rapid reset", "h2 rapid reset", "CVE-2023-44487", "rudy", "websocket dos", "graphql amplification", "resource exhaustion", "hashdos", "billion laughs", "xml bomb", "zip bomb", "amplification", "drdos", "dns amplification", "ntp monlist", "memcached udp", "ip spoofing", "反射攻击", "放大攻击"],
-      "files": ["22-dos/01-application-layer-dos.md", "22-dos/02-resource-exhaustion.md", "22-dos/03-amplification-drdos.md"],
+      "files": ["22-dos/01-application-layer-dos.md", "22-dos/02-resource-exhaustion.md", "22-dos/03-amplification-drdos.md", "22-dos/04-redos.md", "22-dos/05-http2-continuation.md", "22-dos/06-tcp-state-exhaustion.md", "22-dos/07-dns-dos.md", "22-dos/08-tls-exhaustion.md", "22-dos/09-cache-cdn-dos.md", "22-dos/10-api-abuse.md", "22-dos/11-cloud-container-dos.md", "22-dos/12-ssrf-dos.md", "22-dos/13-database-dos.md"],
       "priority": 8
+    },
+    {
+      "id": "paywall-bypass",
+      "signals": ["paywall", "付费墙", "付费订阅", "metered paywall", "hard paywall", "registration wall", "piano", "tinypass", "poool", "sophi", "zephr", "wallkit", "axate", "agate", "leaky paywall", "substack paywall", "ghost paywall", "medium paywall", "beehiiv", "googlebot", "bingbot", "user-agent spoof", "referer spoof", "declarativeNetRequest", "archive.is", "json-ld articleBody", "amp paywall", "amp-access", "bloomberg paywall", "wsj paywall", "nytimes paywall", "cookie paywall", "localStorage meter", "piano overlay", "news paywall", "publisher paywall", "site paywall"],
+      "files": [
+        "23-paywall-bypass/01-paywall-detection-bypass.md",
+        "23-paywall-bypass/02-http-header-manipulation.md",
+        "23-paywall-bypass/03-network-rule-blocking.md",
+        "23-paywall-bypass/04-content-extraction.md",
+        "23-paywall-bypass/05-dom-css-manipulation.md"
+      ],
+      "priority": 9
     }
   ]
 }
