@@ -67,7 +67,7 @@ strings $SO_PATH | grep "UPX"
 | 混淆类型 | 策略 |
 |---------|------|
 | oxorany | 不跟 XOR 逻辑；用 Frida 在调用点 dump 明文参数 |
-| OLLVM 平坦化 | 用 `D810` (Ghidra) / `HexRaysDeob` (IDA) 插件反混淆 |
+| OLLVM 平坦化 | 用 Ghidra 脚本反混淆 / `HexRaysDeob` (IDA) 插件 / angr 符号执行 |
 | UPX 变种 | 动态: `frida -f` spawn + 在 `dlopen` 后 dump so |
 | 字符串加密 | Frida hook `.init_array` 执行后的关键函数, 抓明文 |
 
