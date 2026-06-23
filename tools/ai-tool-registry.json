@@ -565,6 +565,23 @@
       },
       "ai_callable": true,
       "notes": "单代理快速连通性/匿名性测试."
+    },
+    {
+      "id": "misc.mitmproxy_capture",
+      "board": "misc",
+      "name": "MITM Proxy Capture",
+      "launch_mode": "cli",
+      "command": "python",
+      "args": [
+        "tools/mitmproxy_capture/mitmproxy_capture.py",
+        "status"
+      ],
+      "safe_probe": {
+        "type": "command",
+        "timeout_ms": 15000
+      },
+      "ai_callable": true,
+      "notes": "抓包/改包/发包: capture(抓包保存JSON), modify(代理+addon实时改包), replay(重放已抓flow), craft(构造发包). CA证书在%USERPROFILE%/.mitmproxy/."
     }
   ]
 }
