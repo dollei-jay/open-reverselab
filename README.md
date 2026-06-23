@@ -62,22 +62,27 @@ cases/        → 轻量索引，不复制大文件
 ```powershell
 git clone https://github.com/LING71671/open-reverselab.git
 cd open-reverselab
-.\scripts\misc\bootstrap.ps1              # 核心脚本 wrapper（无需下载）
 .\scripts\misc\install_tools.ps1 -CTF       # Web 工具
 .\scripts\misc\install_tools.ps1 -Android   # APK 工具
 .\scripts\misc\install_tools.ps1 -Windows   # PE 工具
 .\scripts\misc\install_tools.ps1 -Common    # Ghidra + Maven
 ```
 
-安装后验证：
+## 迭代模式
 
-```powershell
-python scripts/misc/lab_healthcheck.py
-python scripts/misc/ai_toolcheck.py --board misc
-python scripts/misc/public_release_check.py
+```
+打靶 (Playwright/浏览器自动化)    提取增量                写/改 制品             同步 open-reverseLab
+─────────────────────────  →  ──────────────  →  ──────────────────────  →  ───────────────────
+攻破 Lab / CTF               判断是否新增技巧        kb/   技术文档           git commit (案例不推)
+截图验收                     仅增强有差异的点        scripts/ 自动化脚本      技术制品开源
+                             无则不硬改             templates/ 模板
+                                                   tools/   工具
 ```
 
-`--board misc` 验证 fresh clone 的核心 Agent 脚本和轻量工具；Android/Windows/CTF 外部工具需安装对应板块后再运行全量 `python scripts/misc/ai_toolcheck.py`。
+**规则**：
+1. 每个 Lab 攻破后判断是否有**新技巧**，有则落成制品，无则不硬写
+2. 制品优先追加/插入，保持原文风格不变
+3. 案例细节留私库，通用化技术写入制品后同步开源
 
 ## 链路
 
@@ -88,10 +93,6 @@ CLAUDE.md → AGENTS.md → AI-USAGE.md → boards/<board>/AI-USAGE.md
 ```
 
 搭配 [codex-session-patcher](https://github.com/ryfineZ/codex-session-patcher) 一键配置项目级 `.codex/` 环境与 MCP 服务器。
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=LING71671/open-reverselab&type=Date)](https://star-history.com/#LING71671/open-reverselab&Date)
 
 ## 许可
 
