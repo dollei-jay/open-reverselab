@@ -77,6 +77,8 @@ python scripts/misc/ai_toolcheck.py --board misc
 python scripts/misc/public_release_check.py
 ```
 
+`--board misc` 验证 fresh clone 的核心 Agent 脚本和轻量工具；Android/Windows/CTF 外部工具需安装对应板块后再运行全量 `python scripts/misc/ai_toolcheck.py`。
+
 ## 链路
 
 启动时 Agent 沿此链路加载上下文：

@@ -77,6 +77,8 @@ python scripts/misc/ai_toolcheck.py --board misc
 python scripts/misc/public_release_check.py
 ```
 
+`--board misc` verifies the fresh-clone core Agent scripts and lightweight tools. Run the full `python scripts/misc/ai_toolcheck.py` only after installing the Android, Windows, and CTF board toolchains you need.
+
 ## Context Chain
 
 On startup the Agent loads context along this chain:

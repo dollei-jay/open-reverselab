@@ -18,6 +18,7 @@ import os
 import re
 import subprocess
 import sys
+from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -141,6 +142,12 @@ def check_command(tool: dict[str, Any], probe: dict[str, Any]) -> dict[str, Any]
     output = one_line((proc.stdout or "") + " " + (proc.stderr or ""))
     if proc.returncode != 0 and not allow_nonzero:
         return {"status": "FAIL", "detail": f"exit={proc.returncode} {output}", "path": command}
+    if proc.returncode != 0 and allow_nonzero:
+        return {
+            "status": "FOUND_WITH_WARN",
+            "detail": f"exit={proc.returncode} (nonzero allowed) {output}",
+            "path": command,
+        }
     return {"status": "FOUND", "detail": f"exit={proc.returncode} {output}", "path": command}
 
 
@@ -177,7 +184,23 @@ def render_md(payload: dict[str, Any]) -> str:
         f"- Registry: `{payload['registry']}`",
         f"- Overall: **{payload['overall']}**",
         f"- Found: {payload['found']}",
+        f"- Warnings: {payload['warn']}",
         f"- Missing/Fail/Timeout: {payload['bad']}",
+        "",
+        "## Board Summary",
+        "",
+        "| Board | FOUND | FOUND_WITH_WARN | MISSING | FAIL | TIMEOUT | SKIPPED |",
+        "|---|---:|---:|---:|---:|---:|---:|",
+    ]
+    for board, counts in sorted(payload["boards"].items()):
+        lines.append(
+            f"| {board} | {counts.get('FOUND', 0)} | {counts.get('FOUND_WITH_WARN', 0)} | "
+            f"{counts.get('MISSING', 0)} | {counts.get('FAIL', 0)} | "
+            f"{counts.get('TIMEOUT', 0)} | {counts.get('SKIPPED', 0)} |"
+        )
+    lines += [
+        "",
+        "## Tool Results",
         "",
         "| Status | Board | ID | Mode | AI Callable | Detail | Path |",
         "|---|---|---|---|---:|---|---|",
@@ -213,16 +236,24 @@ def main(argv: list[str]) -> int:
 
     results = [check_tool(t) for t in tools]
     bad_status = {"MISSING", "FAIL", "TIMEOUT"}
-    found = sum(1 for r in results if r["status"] == "FOUND")
+    warn_status = {"FOUND_WITH_WARN"}
+    found_status = {"FOUND", *warn_status}
+    found = sum(1 for r in results if r["status"] in found_status)
+    warn = sum(1 for r in results if r["status"] in warn_status)
     bad = sum(1 for r in results if r["status"] in bad_status)
     overall = "PASS" if bad == 0 else "FAIL"
+    board_counts: dict[str, Counter[str]] = defaultdict(Counter)
+    for result in results:
+        board_counts[str(result.get("board") or "unknown")][str(result.get("status") or "unknown")] += 1
 
     payload = {
         "time": datetime.now().astimezone().isoformat(timespec="seconds"),
         "registry": str(registry_path),
         "overall": overall,
         "found": found,
+        "warn": warn,
         "bad": bad,
+        "boards": {board: dict(counts) for board, counts in board_counts.items()},
         "results": results,
     }
     payload = sanitize_payload(payload, ROOT)
@@ -238,6 +269,7 @@ def main(argv: list[str]) -> int:
     summary = {
         "Overall": overall,
         "Found": found,
+        "Warn": warn,
         "Bad": bad,
         "Json": sanitize_text(str(json_path), ROOT),
         "Markdown": sanitize_text(str(md_path), ROOT),
