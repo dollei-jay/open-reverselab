@@ -62,10 +62,19 @@ cases/        → 轻量索引，不复制大文件
 ```powershell
 git clone https://github.com/LING71671/open-reverselab.git
 cd open-reverselab
+.\scripts\misc\bootstrap.ps1              # 核心脚本 wrapper（无需下载）
 .\scripts\misc\install_tools.ps1 -CTF       # Web 工具
 .\scripts\misc\install_tools.ps1 -Android   # APK 工具
 .\scripts\misc\install_tools.ps1 -Windows   # PE 工具
 .\scripts\misc\install_tools.ps1 -Common    # Ghidra + Maven
+```
+
+安装后验证：
+
+```powershell
+python scripts/misc/lab_healthcheck.py
+python scripts/misc/ai_toolcheck.py --board misc
+python scripts/misc/public_release_check.py
 ```
 
 ## 链路

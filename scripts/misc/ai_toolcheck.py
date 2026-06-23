@@ -15,6 +15,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime
@@ -25,6 +26,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "tools" / "ai-tool-registry.json"
 REPORT_DIR = ROOT / "reports" / "misc" / "toolcheck"
+USER_PATH_RE = re.compile(r"\b[A-Za-z]:\\Users\\[^\\\s\"']+", re.I)
+UNIX_USER_PATH_RE = re.compile(r"/(?:home|Users)/[^/\s\"']+")
 
 
 def sha256_file(path: Path) -> str:
@@ -38,6 +41,49 @@ def sha256_file(path: Path) -> str:
 def one_line(text: str, limit: int = 260) -> str:
     text = " ".join((text or "").replace("\r", "\n").split())
     return text[: limit - 3] + "..." if len(text) > limit else text
+
+
+def _private_root_variants() -> list[str]:
+    variants: list[str] = []
+    for raw in os.environ.get("REVERSELAB_PRIVATE_ROOTS", "").split(os.pathsep):
+        raw = raw.strip()
+        if not raw:
+            continue
+        variants.extend({raw, raw.replace("\\", "/"), raw.replace("\\", "\\\\")})
+    return variants
+
+
+def sanitize_text(value: str, root: Path = ROOT) -> str:
+    if not value:
+        return value
+    text = value
+    try:
+        path = Path(value)
+        if path.is_absolute():
+            rel = path.resolve().relative_to(root.resolve())
+            text = rel.as_posix()
+    except (ValueError, OSError):
+        pass
+    text = USER_PATH_RE.sub("<user>", text)
+    text = UNIX_USER_PATH_RE.sub("/<user>", text)
+    for variant in _private_root_variants():
+        text = text.replace(variant, "<private-root>")
+    return text
+
+
+def sanitize_result(result: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
+    out = dict(result)
+    for key in ("path", "detail"):
+        if key in out and out[key] is not None:
+            out[key] = sanitize_text(str(out[key]), root)
+    return out
+
+
+def sanitize_payload(payload: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
+    out = dict(payload)
+    out["registry"] = sanitize_text(str(payload.get("registry", "")), root)
+    out["results"] = [sanitize_result(r, root) for r in payload.get("results") or []]
+    return out
 
 
 def check_file(tool: dict[str, Any], probe: dict[str, Any]) -> dict[str, Any]:
@@ -179,6 +225,7 @@ def main(argv: list[str]) -> int:
         "bad": bad,
         "results": results,
     }
+    payload = sanitize_payload(payload, ROOT)
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -188,7 +235,14 @@ def main(argv: list[str]) -> int:
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     md_path.write_text(render_md(payload), encoding="utf-8")
 
-    print(json.dumps({"Overall": overall, "Found": found, "Bad": bad, "Json": str(json_path), "Markdown": str(md_path)}, ensure_ascii=False, indent=2))
+    summary = {
+        "Overall": overall,
+        "Found": found,
+        "Bad": bad,
+        "Json": sanitize_text(str(json_path), ROOT),
+        "Markdown": sanitize_text(str(md_path), ROOT),
+    }
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if overall == "PASS" else 1
 
 

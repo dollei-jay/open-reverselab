@@ -67,3 +67,13 @@ tools/skills/mcp/JSHookLocal/dist/
 # Downloads cache (created by install_tools.ps1)
 tools/common/downloads/
 tools/ctf-website/_downloads/
+
+# Local agent / IDE config (not part of public release)
+.codex/
+.serena/
+
+# Generated reports (may contain machine paths); keep README stubs
+reports/**
+!reports/**/
+!reports/**/README.md
+!reports/**/.gitkeep

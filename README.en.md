@@ -62,10 +62,19 @@ cases/        → Lightweight index — no large file copies
 ```powershell
 git clone https://github.com/LING71671/open-reverselab.git
 cd open-reverselab
+.\scripts\misc\bootstrap.ps1              # Core script wrappers (no downloads)
 .\scripts\misc\install_tools.ps1 -CTF       # Web tools
 .\scripts\misc\install_tools.ps1 -Android   # APK tools
 .\scripts\misc\install_tools.ps1 -Windows   # PE tools
 .\scripts\misc\install_tools.ps1 -Common    # Ghidra + Maven
+```
+
+Post-install verification:
+
+```powershell
+python scripts/misc/lab_healthcheck.py
+python scripts/misc/ai_toolcheck.py --board misc
+python scripts/misc/public_release_check.py
 ```
 
 ## Context Chain

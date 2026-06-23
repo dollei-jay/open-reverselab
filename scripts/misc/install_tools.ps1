@@ -568,3 +568,5 @@ Write-Host @"
 ═══════════════════════════════════════════
 
 "@ -ForegroundColor Green
+
+& (Join-Path $PSScriptRoot "bootstrap.ps1") -Force | Out-Null
